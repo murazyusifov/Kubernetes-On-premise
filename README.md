@@ -38,7 +38,8 @@ The goal of this project is to automate the provisioning and deployment of a Kub
 
    ```bash
    git clone https://github.com/murazyusifov/k8s-vsphere-terraform-kubespray.git
-   cd k8s-vsphere-terraform-kubespray```
+   cd k8s-vsphere-terraform-kubespray
+   ```
 
 2. **Run the Script**
 
