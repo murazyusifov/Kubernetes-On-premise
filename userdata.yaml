@@ -1,0 +1,5 @@
+users:
+  - name: <username>
+    password: <password>
+    groups: sudo 
+    shell: /bin/bash
