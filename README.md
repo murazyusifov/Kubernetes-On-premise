@@ -6,10 +6,10 @@ This repository contains the setup and configuration files for deploying a Kuber
 
 - [Overview](#overview)
 - [Prerequisites](#prerequisites)
-- [Setup Instructions](#setup-instructions)
 - [Key Features](#key-features)
-- [Cluster Configuration](#cluster-configuration)
+- [Setup Instructions](#setup-instructions)
 - [Accessing the Cluster](#accessing-the-cluster)
+- [Cluster Configuration](#cluster-configuration)
 - [Cleanup](#cleanup)
 
 ## Overview
@@ -17,6 +17,14 @@ This repository contains the setup and configuration files for deploying a Kuber
 The goal of this project is to automate the provisioning and deployment of a Kubernetes cluster using the following tools:
 - **Terraform**: For Infrastructure as Code (IaC) to provision virtual machines (VMs) in vSphere.
 - **Kubespray**: For deploying Kubernetes on the provisioned VMs using Ansible playbooks.
+
+## Key Features
+- Automated VM provisioning on vSphere using Terraform.
+- Configurable infrastructure, including CPU, memory, and storage for each node.
+- Multi-node Kubernetes cluster setup (1 master and multiple workers).
+- Full Kubernetes installation and configuration using Kubespray.
+- Highly available and scalable infrastructure.
+
 
 ## Prerequisites
 
@@ -29,7 +37,7 @@ The goal of this project is to automate the provisioning and deployment of a Kub
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/yourusername/k8s-vsphere-terraform-kubespray.git
+   git clone https://github.com/murazyusifov/k8s-vsphere-terraform-kubespray.git
    cd k8s-vsphere-terraform-kubespray```
 
 2. **Run the Script**
@@ -39,13 +47,28 @@ The goal of this project is to automate the provisioning and deployment of a Kub
     terraform apply -auto-approve
     ```
 
-## Key Features
-- Automated VM provisioning on vSphere using Terraform.
-- Configurable infrastructure, including CPU, memory, and storage for each node.
-- Multi-node Kubernetes cluster setup (1 master and multiple workers).
-- Full Kubernetes installation and configuration using Kubespray.
-- Highly available and scalable infrastructure.
+## Accessing the Cluster
 
+To interact with the Kubernetes cluster from within the **k8s-master** or **k8s-worker** machines, you must switch to the `root` user to use the `kubectl` command:
+
+1. **SSH into the master node** (or a worker node if needed):
+
+   ```bash
+   ssh <user>@<master-node-ip>
+   ```
+
+2. **Switch to root user**
+
+    ```bash
+    sudo su
+    ```
+
+3. **Verify the cluster is running using kubectl commands**
+
+    ```bash
+    kubectl get nodes
+    kubectl get pods -A
+    ```
 ## Cluster Configuration
 
 In this project, three virtual machines (VMs) were provisioned, each serving a distinct role in the Kubernetes cluster:
@@ -71,29 +94,6 @@ In this project, three virtual machines (VMs) were provisioned, each serving a d
    - This node is scalable, meaning more worker nodes can be added to increase the cluster's capacity to run workloads.
 
 Note: if you decide on other cluster configuration, there are necessary commands in python script! 
-
-## Accessing the Cluster
-
-To interact with the Kubernetes cluster from within the **k8s-master** or **k8s-worker** machines, you must switch to the `root` user to use the `kubectl` command:
-
-1. **SSH into the master node** (or a worker node if needed):
-
-   ```bash
-   ssh <user>@<master-node-ip>
-   ```
-
-2. **Switch to root user**
-
-    ```bash
-    sudo su
-    ```
-
-3. **Verify the cluster is running using kubectl commands**
-
-    ```bash
-    kubectl get nodes
-    kubectl get pods -A
-    ```
 
 ## Cleanup
 
