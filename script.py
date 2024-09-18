@@ -6,16 +6,20 @@ import yaml
 with open("/home/terraform/kubespray/inventory/mycluster/hosts.yaml", "r") as file:
     data = yaml.safe_load(file)
 
-# Rename "node1" to "master" and "node2" to "worker" in the "hosts" section
+'''
+By default there are as many host names as declared IP addresses, to customize naming use the belowmentioned commands
+'''
+
+# Change default hostnames
 data["all"]["hosts"]["master"] = data["all"]["hosts"].pop("node1")
 data["all"]["hosts"]["worker"] = data["all"]["hosts"].pop("node2")
 
-# Adjust the children sections to reflect the new host names
+# Delete default hostnames under kube_control_plane block under children section
 data["all"]["children"]["kube_control_plane"]["hosts"]["master"] = {}
 del data["all"]["children"]["kube_control_plane"]["hosts"]["node1"]
 del data["all"]["children"]["kube_control_plane"]["hosts"]["node2"]
 
-# Update the 'children' section to reflect the new hostnames without {}
+# Update the 'children' section to reflect the new hostnames
 data["all"]["children"]["kube_control_plane"] = {"hosts": {"master": None}}
 data["all"]["children"]["kube_node"] = {"hosts": {"worker": None}}
 data["all"]["children"]["etcd"] = {"hosts": {"master": None}}
